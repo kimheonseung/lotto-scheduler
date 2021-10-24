@@ -13,10 +13,10 @@ public class LottoSchedulerApplication {
 
     public static void main(String[] args) {
         /* Start as non-web applications */
-//        SpringApplication app = new SpringApplication(LottoSchedulerApplication.class);
-//        app.setWebApplicationType(WebApplicationType.NONE);
-//        app.run(args);
-        SpringApplication.run(LottoSchedulerApplication.class, args);
+        SpringApplication app = new SpringApplication(LottoSchedulerApplication.class);
+        app.setWebApplicationType(WebApplicationType.NONE);
+        app.run(args);
+//        SpringApplication.run(LottoSchedulerApplication.class, args);
     }
 
 }

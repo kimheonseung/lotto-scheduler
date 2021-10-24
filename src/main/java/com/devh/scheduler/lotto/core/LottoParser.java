@@ -750,7 +750,7 @@ public class LottoParser {
     private void setIdAndRowId(Element storeTd, LottoConstant.LottoRank lottoRank, int turn, LottoWinningStoreVO lottoWinningStoreVO) {
         int storeNumber = Integer.parseInt(storeTd.text().trim());
         lottoWinningStoreVO.setId(storeNumber);
-        lottoWinningStoreVO.setRowId(turn + UNDERBAR + lottoRank.getRank() + UNDERBAR + storeNumber);
+        lottoWinningStoreVO.setRowId(turn + UNDERBAR + lottoRank.getRank() + UNDERBAR + String.format("%04d", storeNumber));
     }
 
     /**

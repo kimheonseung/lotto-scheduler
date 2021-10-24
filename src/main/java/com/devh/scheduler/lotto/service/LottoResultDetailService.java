@@ -1,6 +1,6 @@
 package com.devh.scheduler.lotto.service;
 
-import com.devh.scheduler.lotto.dto.LottoResultDetailDTO;
+import com.devh.scheduler.lotto.vo.LottoResultDetailVO;
 import com.devh.scheduler.lotto.entity.LottoResult;
 import com.devh.scheduler.lotto.entity.LottoResultDetail;
 
@@ -39,7 +39,7 @@ public interface LottoResultDetailService {
      * Date   : 2021-02-28
      * </pre>
      */
-    Boolean saveDTOList(List<LottoResultDetailDTO> lottoResultDetailDTOList);
+    Boolean saveVOList(List<LottoResultDetailVO> lottoResultDetailVOList);
 
     /**
      * <pre>
@@ -60,13 +60,13 @@ public interface LottoResultDetailService {
      * Date   : 2021-02-28
      * </pre>
      */
-    default LottoResultDetail dtoToEntity(LottoResultDetailDTO lottoResultDetailDTO) {
+    default LottoResultDetail voToEntity(LottoResultDetailVO lottoResultDetailVO) {
         return LottoResultDetail.builder()
-                .rank(lottoResultDetailDTO.getRank())
-                .totalPrize(lottoResultDetailDTO.getTotalPrize())
-                .perPersonPrize(lottoResultDetailDTO.getPerPersonPrize())
-                .totalWinnerCount(lottoResultDetailDTO.getTotalWinnerCount())
-                .lottoResult(LottoResult.builder().turn(lottoResultDetailDTO.getTurn()).build())
+                .rank(lottoResultDetailVO.getRank())
+                .totalPrize(lottoResultDetailVO.getTotalPrize())
+                .perPersonPrize(lottoResultDetailVO.getPerPersonPrize())
+                .totalWinnerCount(lottoResultDetailVO.getTotalWinnerCount())
+                .lottoResult(LottoResult.builder().turn(lottoResultDetailVO.getTurn()).build())
                 .build();
     }
 
@@ -88,11 +88,11 @@ public interface LottoResultDetailService {
      * Date   : 2021-02-28
      * </pre>
      */
-    default List<LottoResultDetail> dtoListToEntityList(List<LottoResultDetailDTO> lottoResultDetailDTOList) {
+    default List<LottoResultDetail> voListToEntityList(List<LottoResultDetailVO> lottoResultDetailVOList) {
         List<LottoResultDetail> lottoResultDetailList = new ArrayList<>();
 
-        lottoResultDetailDTOList.forEach(lottoResultDetailDTO -> {
-            lottoResultDetailList.add(dtoToEntity(lottoResultDetailDTO));
+        lottoResultDetailVOList.forEach(lottoResultDetailVO -> {
+            lottoResultDetailList.add(voToEntity(lottoResultDetailVO));
         });
 
         return lottoResultDetailList;

@@ -1,6 +1,6 @@
 package com.devh.scheduler.lotto.service;
 
-import com.devh.scheduler.lotto.dto.LottoResultDetailDTO;
+import com.devh.scheduler.lotto.vo.LottoResultDetailVO;
 import com.devh.scheduler.lotto.entity.LottoResultDetail;
 import com.devh.scheduler.lotto.repository.LottoResultDetailRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,9 +28,9 @@ public class LottoResultDetailServiceImpl implements LottoResultDetailService {
     private final LottoResultDetailRepository lottoResultDetailRepository;
 
     @Override
-    public Boolean saveDTOList(List<LottoResultDetailDTO> lottoResultDetailDTOList) {
-        List<LottoResultDetail> lottoResultDetailList = dtoListToEntityList(lottoResultDetailDTOList);
+    public Boolean saveVOList(List<LottoResultDetailVO> lottoResultDetailVOList) {
+        List<LottoResultDetail> lottoResultDetailList = voListToEntityList(lottoResultDetailVOList);
         List<LottoResultDetail> saveResultList = lottoResultDetailRepository.saveAll(lottoResultDetailList);
-        return saveResultList.size() == lottoResultDetailDTOList.size();
+        return saveResultList.size() == lottoResultDetailVOList.size();
     }
 }

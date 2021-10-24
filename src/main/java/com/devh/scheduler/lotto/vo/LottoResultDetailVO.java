@@ -1,4 +1,4 @@
-package com.devh.scheduler.lotto.dto;
+package com.devh.scheduler.lotto.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,7 +28,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class LottoResultDetailDTO {
+public class LottoResultDetailVO {
     private Long rowId;
     private Integer rank;
     private Long totalPrize;

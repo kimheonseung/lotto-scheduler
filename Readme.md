@@ -2,7 +2,7 @@
 
 ### Library & Framework
 - Spring Data JPA
-- Spring Data Elasticsearch
+- Spring Data Elasticsearch (Deprecated)
 - Lombok
 - Jsoup
 - Spring Boot (non-web)
@@ -12,7 +12,7 @@
 - com.devh.common : Common Package
 - com.devh.scheduler.lotto.configuration : Java Configurations
 - com.devh.scheduler.lotto.constant : Constants
-- com.devh.scheduler.lotto.dto : DTO
+- com.devh.scheduler.lotto.vo : DTO
 - com.devh.scheduler.lotto.entity : Entity
 - com.devh.scheduler.lotto.repository : Spring Data Repository
 - com.devh.scheduler.lotto.core : Data Scraping Scheduler
@@ -26,8 +26,8 @@
 - database.schema : db name
 - database.username : db username
 - database.password : db password
-- elasticsearch.ip : es ip
-- elasticsearch.port : es port
+- elasticsearch.ip : es ip (Deprecated)
+- elasticsearch.port : es port (Deprecated)
 ```
 server.ip=192.168.0.3
 database.ip=127.0.0.1
@@ -35,9 +35,8 @@ database.port=3306
 database.schema=devh
 database.username=devh
 database.password=1234
-elasticsearch.ip=127.0.0.1
-elasticsearch.port=9200
-javfree.image.save=false
+elasticsearch.ip=127.0.0.1 (Deprecated)
+elasticsearch.port=9200 (Deprecated)
 ```
 
 ### Build  

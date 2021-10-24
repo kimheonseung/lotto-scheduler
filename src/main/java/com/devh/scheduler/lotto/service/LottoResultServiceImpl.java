@@ -1,6 +1,6 @@
 package com.devh.scheduler.lotto.service;
 
-import com.devh.scheduler.lotto.dto.LottoResultDTO;
+import com.devh.scheduler.lotto.vo.LottoResultVO;
 import com.devh.scheduler.lotto.entity.LottoResult;
 import com.devh.scheduler.lotto.repository.LottoResultRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,9 +26,9 @@ public class LottoResultServiceImpl implements LottoResultService {
     private final LottoResultRepository lottoResultRepository;
 
     @Override
-    public Boolean saveDTO(LottoResultDTO lottoResultDTO) {
-        LottoResult lottoResult = lottoResultRepository.save(dtoToEntity(lottoResultDTO));
-        return lottoResult.getTurn().intValue() == lottoResultDTO.getTurn().intValue();
+    public Boolean saveVO(LottoResultVO lottoResultVO) {
+        LottoResult lottoResult = lottoResultRepository.save(voToEntity(lottoResultVO));
+        return lottoResult.getTurn().intValue() == lottoResultVO.getTurn().intValue();
     }
 
     @Override

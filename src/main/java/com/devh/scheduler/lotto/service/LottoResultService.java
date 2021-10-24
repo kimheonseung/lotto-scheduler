@@ -1,7 +1,7 @@
 package com.devh.scheduler.lotto.service;
 
 
-import com.devh.scheduler.lotto.dto.LottoResultDTO;
+import com.devh.scheduler.lotto.vo.LottoResultVO;
 import com.devh.scheduler.lotto.entity.LottoResult;
 
 /**
@@ -35,7 +35,7 @@ public interface LottoResultService {
      * Date   : 2021-02-28
      * </pre>
      */
-    Boolean saveDTO(LottoResultDTO lottoResultDTO);
+    Boolean saveVO(LottoResultVO lottoResultVO);
     /**
      * <pre>
      * Description
@@ -72,21 +72,21 @@ public interface LottoResultService {
      * Date   : 2021-02-28
      * </pre>
      */
-    default LottoResult dtoToEntity(LottoResultDTO lottoResultDTO) {
+    default LottoResult voToEntity(LottoResultVO lottoResultVO) {
         return LottoResult.builder()
-                .turn(lottoResultDTO.getTurn())
-                .date(lottoResultDTO.getDate())
-                .number1(lottoResultDTO.getNumber1())
-                .number2(lottoResultDTO.getNumber2())
-                .number3(lottoResultDTO.getNumber3())
-                .number4(lottoResultDTO.getNumber4())
-                .number5(lottoResultDTO.getNumber5())
-                .number6(lottoResultDTO.getNumber6())
-                .number7(lottoResultDTO.getNumber7())
-                .totalSalesPrice(lottoResultDTO.getTotalSalesPrice())
-                .autoWinnerCount(lottoResultDTO.getAutoWinnerCount())
-                .semiAutoWinnerCount(lottoResultDTO.getSemiAutoWinnerCount())
-                .manualWinnerCount(lottoResultDTO.getManualWinnerCount())
+                .turn(lottoResultVO.getTurn())
+                .date(lottoResultVO.getDate())
+                .number1(lottoResultVO.getNumber1())
+                .number2(lottoResultVO.getNumber2())
+                .number3(lottoResultVO.getNumber3())
+                .number4(lottoResultVO.getNumber4())
+                .number5(lottoResultVO.getNumber5())
+                .number6(lottoResultVO.getNumber6())
+                .number7(lottoResultVO.getNumber7())
+                .totalSalesPrice(lottoResultVO.getTotalSalesPrice())
+                .autoWinnerCount(lottoResultVO.getAutoWinnerCount())
+                .semiAutoWinnerCount(lottoResultVO.getSemiAutoWinnerCount())
+                .manualWinnerCount(lottoResultVO.getManualWinnerCount())
                 .build();
     }
 

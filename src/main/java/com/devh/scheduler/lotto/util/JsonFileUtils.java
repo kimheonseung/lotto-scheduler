@@ -4,9 +4,9 @@ import com.devh.common.util.ExceptionUtils;
 import com.devh.scheduler.lotto.constant.LottoResultColumn;
 import com.devh.scheduler.lotto.constant.LottoResultDetailColumn;
 import com.devh.scheduler.lotto.constant.NewsResultStoreField;
-import com.devh.scheduler.lotto.dto.LottoResultDTO;
-import com.devh.scheduler.lotto.dto.LottoResultDetailDTO;
-import com.devh.scheduler.lotto.dto.LottoResultStoreDTO;
+import com.devh.scheduler.lotto.vo.LottoResultVO;
+import com.devh.scheduler.lotto.vo.LottoResultDetailVO;
+import com.devh.scheduler.lotto.vo.LottoResultStoreVO;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -64,21 +64,21 @@ public class JsonFileUtils {
      * Date   : 2021-04-10
      * </pre>
      */
-    private JSONObject lottoResultDTOToJSONObject(LottoResultDTO lottoResultDTO) {
+    private JSONObject lottoResultDTOToJSONObject(LottoResultVO lottoResultVO) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put(LottoResultColumn.TURN.getSnakeCase(), lottoResultDTO.getTurn());
-        jsonObject.put(LottoResultColumn.DATE.getSnakeCase(), lottoResultDTO.getDate());
-        jsonObject.put(LottoResultColumn.NUMBER1.getSnakeCase(), lottoResultDTO.getNumber1());
-        jsonObject.put(LottoResultColumn.NUMBER2.getSnakeCase(), lottoResultDTO.getNumber2());
-        jsonObject.put(LottoResultColumn.NUMBER3.getSnakeCase(), lottoResultDTO.getNumber3());
-        jsonObject.put(LottoResultColumn.NUMBER4.getSnakeCase(), lottoResultDTO.getNumber4());
-        jsonObject.put(LottoResultColumn.NUMBER5.getSnakeCase(), lottoResultDTO.getNumber5());
-        jsonObject.put(LottoResultColumn.NUMBER6.getSnakeCase(), lottoResultDTO.getNumber6());
-        jsonObject.put(LottoResultColumn.NUMBER7.getSnakeCase(), lottoResultDTO.getNumber7());
-        jsonObject.put(LottoResultColumn.TOTAL_SALES_PRICE.getSnakeCase(), lottoResultDTO.getTotalSalesPrice());
-        jsonObject.put(LottoResultColumn.AUTO_WINNER_COUNT.getSnakeCase(), lottoResultDTO.getAutoWinnerCount());
-        jsonObject.put(LottoResultColumn.SEMI_AUTO_WINNER_COUNT.getSnakeCase(), lottoResultDTO.getSemiAutoWinnerCount());
-        jsonObject.put(LottoResultColumn.MANUAL_WINNER_COUNT.getSnakeCase(), lottoResultDTO.getManualWinnerCount());
+        jsonObject.put(LottoResultColumn.TURN.getSnakeCase(), lottoResultVO.getTurn());
+        jsonObject.put(LottoResultColumn.DATE.getSnakeCase(), lottoResultVO.getDate());
+        jsonObject.put(LottoResultColumn.NUMBER1.getSnakeCase(), lottoResultVO.getNumber1());
+        jsonObject.put(LottoResultColumn.NUMBER2.getSnakeCase(), lottoResultVO.getNumber2());
+        jsonObject.put(LottoResultColumn.NUMBER3.getSnakeCase(), lottoResultVO.getNumber3());
+        jsonObject.put(LottoResultColumn.NUMBER4.getSnakeCase(), lottoResultVO.getNumber4());
+        jsonObject.put(LottoResultColumn.NUMBER5.getSnakeCase(), lottoResultVO.getNumber5());
+        jsonObject.put(LottoResultColumn.NUMBER6.getSnakeCase(), lottoResultVO.getNumber6());
+        jsonObject.put(LottoResultColumn.NUMBER7.getSnakeCase(), lottoResultVO.getNumber7());
+        jsonObject.put(LottoResultColumn.TOTAL_SALES_PRICE.getSnakeCase(), lottoResultVO.getTotalSalesPrice());
+        jsonObject.put(LottoResultColumn.AUTO_WINNER_COUNT.getSnakeCase(), lottoResultVO.getAutoWinnerCount());
+        jsonObject.put(LottoResultColumn.SEMI_AUTO_WINNER_COUNT.getSnakeCase(), lottoResultVO.getSemiAutoWinnerCount());
+        jsonObject.put(LottoResultColumn.MANUAL_WINNER_COUNT.getSnakeCase(), lottoResultVO.getManualWinnerCount());
         return jsonObject;
     }
 
@@ -99,13 +99,13 @@ public class JsonFileUtils {
      * Date   : 2021-04-10
      * </pre>
      */
-    private JSONObject lottoResultDetailDTOToJSONObject(LottoResultDetailDTO lottoResultDetailDTO) {
+    private JSONObject lottoResultDetailDTOToJSONObject(LottoResultDetailVO lottoResultDetailVO) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put(LottoResultDetailColumn.LOTTO_RESULT_TURN.getSnakeCase(), lottoResultDetailDTO.getTurn());
-        jsonObject.put(LottoResultDetailColumn.RANK.getSnakeCase(), lottoResultDetailDTO.getRank());
-        jsonObject.put(LottoResultDetailColumn.TOTAL_WINNER_COUNT.getSnakeCase(), lottoResultDetailDTO.getTotalWinnerCount());
-        jsonObject.put(LottoResultDetailColumn.TOTAL_PRIZE.getSnakeCase(), lottoResultDetailDTO.getTotalPrize());
-        jsonObject.put(LottoResultDetailColumn.PER_PERSON_PRIZE.getSnakeCase(), lottoResultDetailDTO.getPerPersonPrize());
+        jsonObject.put(LottoResultDetailColumn.LOTTO_RESULT_TURN.getSnakeCase(), lottoResultDetailVO.getTurn());
+        jsonObject.put(LottoResultDetailColumn.RANK.getSnakeCase(), lottoResultDetailVO.getRank());
+        jsonObject.put(LottoResultDetailColumn.TOTAL_WINNER_COUNT.getSnakeCase(), lottoResultDetailVO.getTotalWinnerCount());
+        jsonObject.put(LottoResultDetailColumn.TOTAL_PRIZE.getSnakeCase(), lottoResultDetailVO.getTotalPrize());
+        jsonObject.put(LottoResultDetailColumn.PER_PERSON_PRIZE.getSnakeCase(), lottoResultDetailVO.getPerPersonPrize());
         return jsonObject;
     }
 
@@ -126,23 +126,23 @@ public class JsonFileUtils {
      * Date   : 2021-04-10
      * </pre>
      */
-    private JSONObject lottoResultStoreDTOToJSONObject(LottoResultStoreDTO lottoResultStoreDTO) {
+    private JSONObject lottoResultStoreDTOToJSONObject(LottoResultStoreVO lottoResultStoreVO) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put(NewsResultStoreField.ROW_ID.getSnakeCase(), lottoResultStoreDTO.getRowId());
-        jsonObject.put(NewsResultStoreField.TURN.getSnakeCase(), lottoResultStoreDTO.getTurn());
-        jsonObject.put(NewsResultStoreField.RANK.getSnakeCase(), lottoResultStoreDTO.getRank());
-        jsonObject.put(NewsResultStoreField.METHOD.getSnakeCase(), lottoResultStoreDTO.getMethod());
-        jsonObject.put(NewsResultStoreField.STORE_NUMBER.getSnakeCase(), lottoResultStoreDTO.getStoreNumber());
-        jsonObject.put(NewsResultStoreField.STORE_NAME.getSnakeCase(), lottoResultStoreDTO.getStoreName());
-        jsonObject.put(NewsResultStoreField.STORE_PHONE.getSnakeCase(), lottoResultStoreDTO.getStorePhone());
-        jsonObject.put(NewsResultStoreField.STORE_ADDRESS.getSnakeCase(), lottoResultStoreDTO.getStoreAddress());
-        jsonObject.put(NewsResultStoreField.STORE_ADDRESS1.getSnakeCase(), lottoResultStoreDTO.getStoreAddress1());
-        jsonObject.put(NewsResultStoreField.STORE_ADDRESS2.getSnakeCase(), lottoResultStoreDTO.getStoreAddress2());
-        jsonObject.put(NewsResultStoreField.STORE_ADDRESS3.getSnakeCase(), lottoResultStoreDTO.getStoreAddress3());
-        jsonObject.put(NewsResultStoreField.STORE_MAP_ID.getSnakeCase(), lottoResultStoreDTO.getStoreMapId());
+        jsonObject.put(NewsResultStoreField.ROW_ID.getSnakeCase(), lottoResultStoreVO.getRowId());
+        jsonObject.put(NewsResultStoreField.TURN.getSnakeCase(), lottoResultStoreVO.getTurn());
+        jsonObject.put(NewsResultStoreField.RANK.getSnakeCase(), lottoResultStoreVO.getRank());
+        jsonObject.put(NewsResultStoreField.METHOD.getSnakeCase(), lottoResultStoreVO.getMethod());
+        jsonObject.put(NewsResultStoreField.STORE_NUMBER.getSnakeCase(), lottoResultStoreVO.getStoreNumber());
+        jsonObject.put(NewsResultStoreField.STORE_NAME.getSnakeCase(), lottoResultStoreVO.getStoreName());
+        jsonObject.put(NewsResultStoreField.STORE_PHONE.getSnakeCase(), lottoResultStoreVO.getStorePhone());
+        jsonObject.put(NewsResultStoreField.STORE_ADDRESS.getSnakeCase(), lottoResultStoreVO.getStoreAddress());
+        jsonObject.put(NewsResultStoreField.STORE_ADDRESS1.getSnakeCase(), lottoResultStoreVO.getStoreAddress1());
+        jsonObject.put(NewsResultStoreField.STORE_ADDRESS2.getSnakeCase(), lottoResultStoreVO.getStoreAddress2());
+        jsonObject.put(NewsResultStoreField.STORE_ADDRESS3.getSnakeCase(), lottoResultStoreVO.getStoreAddress3());
+        jsonObject.put(NewsResultStoreField.STORE_MAP_ID.getSnakeCase(), lottoResultStoreVO.getStoreMapId());
         JSONObject location = new JSONObject();
-        location.put(NewsResultStoreField.STORE_LOCATION_LAT.getSnakeCase(), lottoResultStoreDTO.getStoreLatitude());
-        location.put(NewsResultStoreField.STORE_LOCATION_LON.getSnakeCase(), lottoResultStoreDTO.getStoreLongitude());
+        location.put(NewsResultStoreField.STORE_LOCATION_LAT.getSnakeCase(), lottoResultStoreVO.getStoreLatitude());
+        location.put(NewsResultStoreField.STORE_LOCATION_LON.getSnakeCase(), lottoResultStoreVO.getStoreLongitude());
         jsonObject.put(NewsResultStoreField.STORE_LOCATION.getSnakeCase(), location);
         return jsonObject;
     }
@@ -164,11 +164,11 @@ public class JsonFileUtils {
      * Date   : 2021-04-10
      * </pre>
      */
-    public void createLottoResultJsonFile(LottoResultDTO lottoResultDTO) {
-        JSONObject json = lottoResultDTOToJSONObject(lottoResultDTO);
+    public void createLottoResultJsonFile(LottoResultVO lottoResultVO) {
+        JSONObject json = lottoResultDTOToJSONObject(lottoResultVO);
         String RESULT_FILE_PATH = "result";
         final String filePath = JSON_FILE_PATH + File.separator + RESULT_FILE_PATH;
-        final String fileName = String.format(fourDigitIntegerWithZeroFillFormat, lottoResultDTO.getTurn()) + FILE_EXT;
+        final String fileName = String.format(fourDigitIntegerWithZeroFillFormat, lottoResultVO.getTurn()) + FILE_EXT;
         writeContentToFile(filePath, fileName, json.toJSONString());
     }
 
@@ -189,12 +189,12 @@ public class JsonFileUtils {
      * Date   : 2021-04-10
      * </pre>
      */
-    public void createLottoResultDetailListJsonFile(List<LottoResultDetailDTO> lottoResultDetailDTOList) {
+    public void createLottoResultDetailListJsonFile(List<LottoResultDetailVO> lottoResultDetailVOList) {
         JSONArray json = new JSONArray();
-        lottoResultDetailDTOList.forEach(lottoResultDetailDTO -> json.add(lottoResultDetailDTOToJSONObject(lottoResultDetailDTO)));
+        lottoResultDetailVOList.forEach(lottoResultDetailDTO -> json.add(lottoResultDetailDTOToJSONObject(lottoResultDetailDTO)));
         String DETAIL_FILE_PATH = "detail";
         final String filePath = JSON_FILE_PATH + File.separator + DETAIL_FILE_PATH;
-        final String fileName = String.format(fourDigitIntegerWithZeroFillFormat, lottoResultDetailDTOList.get(0).getTurn()) + FILE_EXT;
+        final String fileName = String.format(fourDigitIntegerWithZeroFillFormat, lottoResultDetailVOList.get(0).getTurn()) + FILE_EXT;
         writeContentToFile(filePath, fileName, json.toJSONString());
     }
 
@@ -215,12 +215,12 @@ public class JsonFileUtils {
      * Date   : 2021-04-10
      * </pre>
      */
-    public void createLottoResultStoreListJsonFile(List<LottoResultStoreDTO> lottoResultStoreDTOList) {
+    public void createLottoResultStoreListJsonFile(List<LottoResultStoreVO> lottoResultStoreVOList) {
         JSONArray json = new JSONArray();
-        lottoResultStoreDTOList.forEach(lottoResultStoreDTO -> json.add(lottoResultStoreDTOToJSONObject(lottoResultStoreDTO)));
+        lottoResultStoreVOList.forEach(lottoResultStoreDTO -> json.add(lottoResultStoreDTOToJSONObject(lottoResultStoreDTO)));
         String STORE_FILE_PATH = "store";
         final String filePath = JSON_FILE_PATH + File.separator + STORE_FILE_PATH;
-        final String fileName = String.format(fourDigitIntegerWithZeroFillFormat, lottoResultStoreDTOList.get(0).getTurn()) + FILE_EXT;
+        final String fileName = String.format(fourDigitIntegerWithZeroFillFormat, lottoResultStoreVOList.get(0).getTurn()) + FILE_EXT;
         writeContentToFile(filePath, fileName, json.toJSONString());
     }
 

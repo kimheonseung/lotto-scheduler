@@ -3,9 +3,10 @@ package com.devh.scheduler.lotto.core;
 import com.devh.common.util.ExceptionUtils;
 import com.devh.common.util.component.JsoupUtils;
 import com.devh.scheduler.lotto.constant.LottoConstant;
-import com.devh.scheduler.lotto.dto.LottoResultDTO;
-import com.devh.scheduler.lotto.dto.LottoResultDetailDTO;
-import com.devh.scheduler.lotto.dto.LottoResultStoreDTO;
+import com.devh.scheduler.lotto.vo.LottoResultVO;
+import com.devh.scheduler.lotto.vo.LottoResultDetailVO;
+import com.devh.scheduler.lotto.vo.LottoResultStoreVO;
+import com.devh.scheduler.lotto.vo.LottoWinningStoreVO;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -77,7 +78,7 @@ public class LottoParser {
         return Integer.parseInt(strTurn);
     }
 
-    public LottoResultDTO getLottoResultDTOFromDocument(Document document) {
+    public LottoResultVO getLottoResultVOFromDocument(Document document) {
         final Integer turn = getTurnFromDocument(document);
         final String YEAR = "년";
         final String MONTH = "월";
@@ -125,7 +126,7 @@ public class LottoParser {
 
         final Integer[] winnerCountArray = getWinnerCountArrayFromDocument(document);
 
-        return LottoResultDTO.builder()
+        return LottoResultVO.builder()
                 .turn(turn)
                 .date(date)
                 .number1(number1)
@@ -302,12 +303,12 @@ public class LottoParser {
     /**
      * <pre>
      * Description
-     *     Document로부터 LottoResultDetailDTO 리스트를 파싱하여 반환
+     *     Document로부터 LottoResultDetailVO 리스트를 파싱하여 반환
      * ===============================================
      * Parameters
      *     Document document
      * Returns
-     *     List<LottoResultDetailDTO>
+     *     List<LottoResultDetailVO>
      * Throws
      *
      * ===============================================
@@ -316,12 +317,12 @@ public class LottoParser {
      * Date   : 2021-02-28
      * </pre>
      */
-    public List<LottoResultDetailDTO> getLottoResultDetailDTOListFromURL(Document document) {
+    public List<LottoResultDetailVO> getLottoResultDetailVOListFromURL(Document document) {
         final Integer turn = getTurnFromDocument(document);
         final boolean booleanTotal = true;
         final boolean booleanPerPerson = false;
 
-        LottoResultDetailDTO firstLottoResultDetailDTO = LottoResultDetailDTO.builder()
+        LottoResultDetailVO firstLottoResultDetailVO = LottoResultDetailVO.builder()
                 .turn(turn)
                 .rank(LottoConstant.LottoRank.FIRST.getRank())
                 .totalPrize(getPrizeFromDocument(LottoConstant.LottoRank.FIRST, document, booleanTotal))
@@ -329,7 +330,7 @@ public class LottoParser {
                 .totalWinnerCount(getTotalWinnerCount(LottoConstant.LottoRank.FIRST, document))
                 .build();
 
-        LottoResultDetailDTO secondLottoResultDetailDTO = LottoResultDetailDTO.builder()
+        LottoResultDetailVO secondLottoResultDetailVO = LottoResultDetailVO.builder()
                 .turn(turn)
                 .rank(LottoConstant.LottoRank.SECOND.getRank())
                 .totalPrize(getPrizeFromDocument(LottoConstant.LottoRank.SECOND, document, booleanTotal))
@@ -337,7 +338,7 @@ public class LottoParser {
                 .totalWinnerCount(getTotalWinnerCount(LottoConstant.LottoRank.SECOND, document))
                 .build();
 
-        LottoResultDetailDTO thirdLottoResultDetailDTO = LottoResultDetailDTO.builder()
+        LottoResultDetailVO thirdLottoResultDetailVO = LottoResultDetailVO.builder()
                 .turn(turn)
                 .rank(LottoConstant.LottoRank.THIRD.getRank())
                 .totalPrize(getPrizeFromDocument(LottoConstant.LottoRank.THIRD, document, booleanTotal))
@@ -345,7 +346,7 @@ public class LottoParser {
                 .totalWinnerCount(getTotalWinnerCount(LottoConstant.LottoRank.THIRD, document))
                 .build();
 
-        LottoResultDetailDTO fourthLottoResultDetailDTO = LottoResultDetailDTO.builder()
+        LottoResultDetailVO fourthLottoResultDetailVO = LottoResultDetailVO.builder()
                 .turn(turn)
                 .rank(LottoConstant.LottoRank.FOURTH.getRank())
                 .totalPrize(getPrizeFromDocument(LottoConstant.LottoRank.FOURTH, document, booleanTotal))
@@ -353,7 +354,7 @@ public class LottoParser {
                 .totalWinnerCount(getTotalWinnerCount(LottoConstant.LottoRank.FOURTH, document))
                 .build();
 
-        LottoResultDetailDTO fifthLottoResultDetailDTO = LottoResultDetailDTO.builder()
+        LottoResultDetailVO fifthLottoResultDetailVO = LottoResultDetailVO.builder()
                 .turn(turn)
                 .rank(LottoConstant.LottoRank.FIFTH.getRank())
                 .totalPrize(getPrizeFromDocument(LottoConstant.LottoRank.FIFTH, document, booleanTotal))
@@ -361,12 +362,12 @@ public class LottoParser {
                 .totalWinnerCount(getTotalWinnerCount(LottoConstant.LottoRank.FIFTH, document))
                 .build();
 
-        List<LottoResultDetailDTO> result = new ArrayList<>();
-        result.add(firstLottoResultDetailDTO);
-        result.add(secondLottoResultDetailDTO);
-        result.add(thirdLottoResultDetailDTO);
-        result.add(fourthLottoResultDetailDTO);
-        result.add(fifthLottoResultDetailDTO);
+        List<LottoResultDetailVO> result = new ArrayList<>();
+        result.add(firstLottoResultDetailVO);
+        result.add(secondLottoResultDetailVO);
+        result.add(thirdLottoResultDetailVO);
+        result.add(fourthLottoResultDetailVO);
+        result.add(fifthLottoResultDetailVO);
 
         return result;
     }
@@ -506,7 +507,7 @@ public class LottoParser {
      * Parameters
      *     int url
      * Returns
-     *     List<LottoResultStoreDTO>
+     *     List<LottoResultStoreVO>
      * Throws
      *
      * ===============================================
@@ -515,13 +516,14 @@ public class LottoParser {
      * Date   : 2021-03-09
      * </pre>
      */
-    public List<LottoResultStoreDTO> getLottoResultStoreDTOListFromTurn(int turn) {
+    @Deprecated
+    public List<LottoResultStoreVO> getLottoResultStoreVOListFromTurn(int turn) {
 
         Document document = jsoupUtils.getDocumentFromURL(LottoConstant.LottoURL.STORE_PREFIX.getUrl() + turn);
 
-        List<LottoResultStoreDTO> lottoResultStoreDTOList = new ArrayList<>();
+        List<LottoResultStoreVO> lottoResultStoreVOList = new ArrayList<>();
         if(document.select(LottoConstant.LottoSelector.STORE_FIRST_NODATA.getSelector()).isEmpty())
-            lottoResultStoreDTOList.addAll(getLottoResultStoreDTOFromDocumentWithRank(document, LottoConstant.LottoRank.FIRST, turn));
+            lottoResultStoreVOList.addAll(getLottoResultStoreVOFromDocumentWithRank(document, LottoConstant.LottoRank.FIRST, turn));
 
         if(document.select(LottoConstant.LottoSelector.STORE_SECOND_NODATA.getSelector()).isEmpty()) {
             final int totalPage = document.select(LottoConstant.LottoSelector.STORE_SECOND_PAGINATE.getSelector()).select(A).size();
@@ -530,10 +532,10 @@ public class LottoParser {
                 int nowPage = 1;
                 while(!isPageEnd) {
                     if(nowPage == 1)
-                        lottoResultStoreDTOList.addAll(getLottoResultStoreDTOFromDocumentWithRank(document, LottoConstant.LottoRank.SECOND, turn));
+                        lottoResultStoreVOList.addAll(getLottoResultStoreVOFromDocumentWithRank(document, LottoConstant.LottoRank.SECOND, turn));
                     else {
                         Document secondStorePageDocument = jsoupUtils.getDocumentFromURL(LottoConstant.LottoURL.STORE_PREFIX.getUrl() + turn + "&nowPage=" + nowPage);
-                        lottoResultStoreDTOList.addAll(getLottoResultStoreDTOFromDocumentWithRank(secondStorePageDocument, LottoConstant.LottoRank.SECOND, turn));
+                        lottoResultStoreVOList.addAll(getLottoResultStoreVOFromDocumentWithRank(secondStorePageDocument, LottoConstant.LottoRank.SECOND, turn));
                     }
                     ++nowPage;
                     isPageEnd = nowPage > totalPage;
@@ -541,20 +543,47 @@ public class LottoParser {
             }
         }
 
-        return lottoResultStoreDTOList;
+        return lottoResultStoreVOList;
+    }
+    public List<LottoWinningStoreVO> getLottoWinningStoreVOListFromTurn(int turn) {
+
+        Document document = jsoupUtils.getDocumentFromURL(LottoConstant.LottoURL.STORE_PREFIX.getUrl() + turn);
+
+        List<LottoWinningStoreVO> lottoWinningStoreVOList = new ArrayList<>();
+        if(document.select(LottoConstant.LottoSelector.STORE_FIRST_NODATA.getSelector()).isEmpty())
+            lottoWinningStoreVOList.addAll(getLottoWinningStoreVOFromDocumentWithRank(document, LottoConstant.LottoRank.FIRST, turn));
+
+        if(document.select(LottoConstant.LottoSelector.STORE_SECOND_NODATA.getSelector()).isEmpty()) {
+            final int totalPage = document.select(LottoConstant.LottoSelector.STORE_SECOND_PAGINATE.getSelector()).select(A).size();
+            if(totalPage >= 1) {
+                boolean isPageEnd = false;
+                int nowPage = 1;
+                while(!isPageEnd) {
+                    if(nowPage == 1)
+                        lottoWinningStoreVOList.addAll(getLottoWinningStoreVOFromDocumentWithRank(document, LottoConstant.LottoRank.SECOND, turn));
+                    else {
+                        Document secondStorePageDocument = jsoupUtils.getDocumentFromURL(LottoConstant.LottoURL.STORE_PREFIX.getUrl() + turn + "&nowPage=" + nowPage);
+                        lottoWinningStoreVOList.addAll(getLottoWinningStoreVOFromDocumentWithRank(secondStorePageDocument, LottoConstant.LottoRank.SECOND, turn));
+                    }
+                    ++nowPage;
+                    isPageEnd = nowPage > totalPage;
+                }
+            }
+        }
+        return lottoWinningStoreVOList;
     }
 
     /**
      * <pre>
      * Description
-     *     Document 객체로부터 1등 또는 2등의 가게 정보들을 LottoResultDTO List로 반환
+     *     Document 객체로부터 1등 또는 2등의 가게 정보들을 LottoResultVO List로 반환
      * ===============================================
      * Parameters
      *     Document document
      *     LottoRank lottoRank
      *     int turn
      * Returns
-     *     List<LottoResultStoreDTO>
+     *     List<LottoResultStoreVO>
      * Throws
      *
      * ===============================================
@@ -563,32 +592,32 @@ public class LottoParser {
      * Date   : 2021/03/12
      * </pre>
      */
-    private List<LottoResultStoreDTO> getLottoResultStoreDTOFromDocumentWithRank(Document document, LottoConstant.LottoRank lottoRank, int turn) {
-        List<LottoResultStoreDTO> lottoResultStoreDTOList = new ArrayList<>();
+    private List<LottoResultStoreVO> getLottoResultStoreVOFromDocumentWithRank(Document document, LottoConstant.LottoRank lottoRank, int turn) {
+        List<LottoResultStoreVO> lottoResultStoreVOList = new ArrayList<>();
         switch (lottoRank) {
             case FIRST:
                 Elements firstStoreTrElements = document.select(LottoConstant.LottoSelector.STORE_FIRST_TBODY.getSelector()).select(TR);
                 for(Element firstStoreTr : firstStoreTrElements) {
                     Elements firstStoreTdElements = firstStoreTr.select(TD);
-                    LottoResultStoreDTO lottoResultStoreDTO = LottoResultStoreDTO.builder()
+                    LottoResultStoreVO lottoResultStoreVO = LottoResultStoreVO.builder()
                             .rank(lottoRank.getRank())
                             .turn(turn)
                             .build();
                     for (int index = 0; index < firstStoreTdElements.size(); ++index) {
                         Element storeTd = firstStoreTdElements.get(index);
                         if (index == 0)
-                            setStoreNumberAndRowId(storeTd, lottoRank, turn, lottoResultStoreDTO);
+                            setStoreNumberAndRowId(storeTd, lottoRank, turn, lottoResultStoreVO);
                         else if (index == 1)
-                            lottoResultStoreDTO.setStoreName(storeTd.text().trim());
+                            lottoResultStoreVO.setStoreName(storeTd.text().trim());
                         else if (index == 2)
-                            lottoResultStoreDTO.setMethod(convertMethod(storeTd.text().trim()));
+                            lottoResultStoreVO.setMethod(convertMethod(storeTd.text().trim()));
                         else if (index == 3)
-                            setAddress(storeTd, lottoResultStoreDTO);
+                            setAddress(storeTd, lottoResultStoreVO);
                         else if (index == 4)
-                            setMapIdAndPhone(storeTd, lottoResultStoreDTO);
+                            setMapIdAndPhone(storeTd, lottoResultStoreVO);
 
                     }
-                    lottoResultStoreDTOList.add(lottoResultStoreDTO);
+                    lottoResultStoreVOList.add(lottoResultStoreVO);
                 }
                 break;
             case SECOND:
@@ -596,33 +625,109 @@ public class LottoParser {
 
                 for(Element secondStoreTr : secondStoreTrElements) {
                     Elements secondStoreTdElements = secondStoreTr.select(TD);
-                    LottoResultStoreDTO lottoResultStoreDTO = LottoResultStoreDTO.builder()
+                    LottoResultStoreVO lottoResultStoreVO = LottoResultStoreVO.builder()
                             .rank(lottoRank.getRank())
                             .turn(turn)
                             .build();
                     for (int index = 0; index < secondStoreTdElements.size(); ++index) {
                         Element storeTd = secondStoreTdElements.get(index);
                         if (index == 0)
-                            setStoreNumberAndRowId(storeTd, lottoRank, turn, lottoResultStoreDTO);
+                            setStoreNumberAndRowId(storeTd, lottoRank, turn, lottoResultStoreVO);
                         else if (index == 1)
-                            lottoResultStoreDTO.setStoreName(storeTd.text().trim());
+                            lottoResultStoreVO.setStoreName(storeTd.text().trim());
                         else if (index == 2)
-                            setAddress(storeTd, lottoResultStoreDTO);
+                            setAddress(storeTd, lottoResultStoreVO);
                         else if (index == 3)
-                            setMapIdAndPhone(storeTd, lottoResultStoreDTO);
+                            setMapIdAndPhone(storeTd, lottoResultStoreVO);
 
                     }
-                    lottoResultStoreDTOList.add(lottoResultStoreDTO);
+                    lottoResultStoreVOList.add(lottoResultStoreVO);
                 }
                 break;
         }
-        return lottoResultStoreDTOList;
+        return lottoResultStoreVOList;
+    }
+
+    /**
+     * <pre>
+     * Description
+     *     Document 객체로부터 1등 또는 2등의 가게 정보들을 LottoWinningStore List로 반환
+     * ===============================================
+     * Parameters
+     *     Document document
+     *     LottoRank lottoRank
+     *     int turn
+     * Returns
+     *     List<LottoWinningStoreVO>
+     * Throws
+     *
+     * ===============================================
+     *
+     * Author : HeonSeung Kim
+     * Date   : 2021-10-23
+     * </pre>
+     */
+    private List<LottoWinningStoreVO> getLottoWinningStoreVOFromDocumentWithRank(Document document, LottoConstant.LottoRank lottoRank, int turn) {
+        List<LottoWinningStoreVO> lottoWinningStoreVOList = new ArrayList<>();
+        switch (lottoRank) {
+            case FIRST:
+                Elements firstStoreTrElements = document.select(LottoConstant.LottoSelector.STORE_FIRST_TBODY.getSelector()).select(TR);
+                for(Element firstStoreTr : firstStoreTrElements) {
+                    Elements firstStoreTdElements = firstStoreTr.select(TD);
+
+                    LottoWinningStoreVO lottoWinningStoreVO = LottoWinningStoreVO.builder()
+                            .rank(lottoRank.getRank())
+                            .turn(turn)
+                            .build();
+
+                    for (int index = 0; index < firstStoreTdElements.size(); ++index) {
+                        Element storeTd = firstStoreTdElements.get(index);
+                        if (index == 0)
+                            setIdAndRowId(storeTd, lottoRank, turn, lottoWinningStoreVO);
+                        else if (index == 1)
+                            lottoWinningStoreVO.setName(storeTd.text().trim());
+                        else if (index == 2)
+                            lottoWinningStoreVO.setMethod(convertMethod(storeTd.text().trim()));
+                        else if (index == 3)
+                            setAddress(storeTd, lottoWinningStoreVO);
+                        else if (index == 4)
+                            setMapIdAndPhone(storeTd, lottoWinningStoreVO);
+                    }
+                    lottoWinningStoreVOList.add(lottoWinningStoreVO);
+                }
+                break;
+            case SECOND:
+                Elements secondStoreTrElements = document.select(LottoConstant.LottoSelector.STORE_SECOND_TBODY.getSelector()).select(TR);
+
+                for(Element secondStoreTr : secondStoreTrElements) {
+                    Elements secondStoreTdElements = secondStoreTr.select(TD);
+                    LottoWinningStoreVO lottoWinningStoreVO = LottoWinningStoreVO.builder()
+                            .rank(lottoRank.getRank())
+                            .turn(turn)
+                            .build();
+                    for (int index = 0; index < secondStoreTdElements.size(); ++index) {
+                        Element storeTd = secondStoreTdElements.get(index);
+                        if (index == 0)
+                            setIdAndRowId(storeTd, lottoRank, turn, lottoWinningStoreVO);
+                        else if (index == 1)
+                            lottoWinningStoreVO.setName(storeTd.text().trim());
+                        else if (index == 2)
+                            setAddress(storeTd, lottoWinningStoreVO);
+                        else if (index == 3)
+                            setMapIdAndPhone(storeTd, lottoWinningStoreVO);
+
+                    }
+                    lottoWinningStoreVOList.add(lottoWinningStoreVO);
+                }
+                break;
+        }
+        return lottoWinningStoreVOList;
     }
 
     /**
      * <pre>
      * Description :
-     *     Element 객체로부터 판매점 번호를 파싱하여 LottoResultStoreDTO의 파라미터에 판매점번호와 rowId를 set
+     *     Element 객체로부터 판매점 번호를 파싱하여 LottoResultStoreVO의 파라미터에 판매점번호와 rowId를 set
      *     rowId 는 회차_등수_판매점번호 형태
      *         ex) 512_1_4
      * ===============================================
@@ -630,17 +735,22 @@ public class LottoParser {
      *     Element storeTd
      *     LottoRank lottoRank
      *     int turn
-     *     LottoResultStoreDTO lottoResultStoreDTO
+     *     LottoResultStoreVO lottoResultStoreVO
      * ===============================================
      *
      * Author : HeonSeung Kim
      * Date   : 2021/03/12
      * </pre>
      */
-    private void setStoreNumberAndRowId(Element storeTd, LottoConstant.LottoRank lottoRank, int turn, LottoResultStoreDTO lottoResultStoreDTO) {
+    private void setStoreNumberAndRowId(Element storeTd, LottoConstant.LottoRank lottoRank, int turn, LottoResultStoreVO lottoResultStoreVO) {
         int storeNumber = Integer.parseInt(storeTd.text().trim());
-        lottoResultStoreDTO.setStoreNumber(storeNumber);
-        lottoResultStoreDTO.setRowId(turn + UNDERBAR + lottoRank.getRank() + UNDERBAR + storeNumber);
+        lottoResultStoreVO.setStoreNumber(storeNumber);
+        lottoResultStoreVO.setRowId(turn + UNDERBAR + lottoRank.getRank() + UNDERBAR + storeNumber);
+    }
+    private void setIdAndRowId(Element storeTd, LottoConstant.LottoRank lottoRank, int turn, LottoWinningStoreVO lottoWinningStoreVO) {
+        int storeNumber = Integer.parseInt(storeTd.text().trim());
+        lottoWinningStoreVO.setId(storeNumber);
+        lottoWinningStoreVO.setRowId(turn + UNDERBAR + lottoRank.getRank() + UNDERBAR + storeNumber);
     }
 
     /**
@@ -676,34 +786,50 @@ public class LottoParser {
     /**
      * <pre>
      * Description :
-     *     Element 객체로부터 주소를 파싱하여 LottoResultStoreDTO의 파라미터에 set
+     *     Element 객체로부터 주소를 파싱하여 LottoResultStoreVO의 파라미터에 set
      * ===============================================
      * Member fields :
      *     Element storeTd
-     *     LottoResultStoreDTO lottoResultStoreDTO
+     *     LottoResultStoreVO lottoResultStoreVO
      * ===============================================
      *
      * Author : HeonSeung Kim
      * Date   : 2021/03/12
      * </pre>
      */
-    private void setAddress(Element storeTd, LottoResultStoreDTO lottoResultStoreDTO) {
+    private void setAddress(Element storeTd, LottoResultStoreVO lottoResultStoreVO) {
         final String storeAddress = storeTd.text().trim();
         final String[] storeAddressSplit = storeAddress.split(SPACE);
-        lottoResultStoreDTO.setStoreAddress(storeAddress);
+        lottoResultStoreVO.setStoreAddress(storeAddress);
         if(storeAddressSplit.length >= 3) {
-            lottoResultStoreDTO.setStoreAddress1(storeAddressSplit[0]);
-            lottoResultStoreDTO.setStoreAddress2(storeAddressSplit[1]);
-            lottoResultStoreDTO.setStoreAddress3(storeAddressSplit[2]);
+            lottoResultStoreVO.setStoreAddress1(storeAddressSplit[0]);
+            lottoResultStoreVO.setStoreAddress2(storeAddressSplit[1]);
+            lottoResultStoreVO.setStoreAddress3(storeAddressSplit[2]);
         } else if(storeAddressSplit.length == 2) {
-            lottoResultStoreDTO.setStoreAddress1(storeAddressSplit[0]);
-            lottoResultStoreDTO.setStoreAddress2(storeAddressSplit[1]);
+            lottoResultStoreVO.setStoreAddress1(storeAddressSplit[0]);
+            lottoResultStoreVO.setStoreAddress2(storeAddressSplit[1]);
         } else if(storeAddressSplit.length == 1) {
-            lottoResultStoreDTO.setStoreAddress1(storeAddressSplit[0]);
+            lottoResultStoreVO.setStoreAddress1(storeAddressSplit[0]);
         }
 
-        setGeoPoint(lottoResultStoreDTO);
+        setGeoPoint(lottoResultStoreVO);
 
+    }
+    private void setAddress(Element storeTd, LottoWinningStoreVO lottoWinningStoreVO) {
+        final String storeAddress = storeTd.text().trim();
+        final String[] storeAddressSplit = storeAddress.split(SPACE);
+        lottoWinningStoreVO.setAddress(storeAddress);
+        if(storeAddressSplit.length >= 3) {
+            lottoWinningStoreVO.setAddressDivision1(storeAddressSplit[0]);
+            lottoWinningStoreVO.setAddressDivision2(storeAddressSplit[1]);
+            lottoWinningStoreVO.setAddressDivision3(storeAddressSplit[2]);
+        } else if(storeAddressSplit.length == 2) {
+            lottoWinningStoreVO.setAddressDivision1(storeAddressSplit[0]);
+            lottoWinningStoreVO.setAddressDivision2(storeAddressSplit[1]);
+        } else if(storeAddressSplit.length == 1) {
+            lottoWinningStoreVO.setAddressDivision1(storeAddressSplit[0]);
+        }
+        setLocation(lottoWinningStoreVO);
     }
 
     /**
@@ -712,7 +838,7 @@ public class LottoParser {
      *     주소가 입력된 객체로부터 위도 / 경도 정보를 set
      * ===============================================
      * Parameters
-     *     LottoResultStoreDTO lottoResultStoreDTO
+     *     LottoResultStoreVO lottoResultStoreVO
      * Returns
      *
      * Throws
@@ -723,14 +849,14 @@ public class LottoParser {
      * Date   : 2021/03/14
      * </pre>
      */
-    private void setGeoPoint(LottoResultStoreDTO lottoResultStoreDTO) {
+    private void setGeoPoint(LottoResultStoreVO lottoResultStoreVO) {
         try {
             URL url = new URL("http://www.dawuljuso.com/input_pro.php");
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             httpURLConnection.setRequestMethod("POST"); // HTTP POST 메소드 설정
             httpURLConnection.setDoOutput(true);
 
-            final String targetAddress = lottoResultStoreDTO.getStoreAddress();
+            final String targetAddress = lottoResultStoreVO.getStoreAddress();
             String encodedParamsString = "refine_ty=8&protocol_="+ UriEncoder.encode(targetAddress);
             OutputStream os = httpURLConnection.getOutputStream();
             byte[] input = encodedParamsString.getBytes(StandardCharsets.UTF_8);
@@ -753,17 +879,17 @@ public class LottoParser {
             boolean isDataEmpty = addressInformationArr[1] == null || addressInformationArr[1].length() == 0;
 
             if(isDataEmpty) {
-//                logger.error("주소 데이터 반환 실패. 대상 : " + lottoResultStoreDTO.getTurn() + "회 " + lottoResultStoreDTO.getStoreAddress());
+//                logger.error("주소 데이터 반환 실패. 대상 : " + lottoResultStoreVO.getTurn() + "회 " + lottoResultStoreVO.getStoreAddress());
 //                logger.error("주소 : " + Arrays.toString(addressInformationArr));
                 return;
             }
 
             try {
-                lottoResultStoreDTO.setStoreLatitude(Double.valueOf(addressInformationArr[4]));
-                lottoResultStoreDTO.setStoreLongitude(Double.valueOf(addressInformationArr[3]));
+                lottoResultStoreVO.setStoreLatitude(Double.valueOf(addressInformationArr[4]));
+                lottoResultStoreVO.setStoreLongitude(Double.valueOf(addressInformationArr[3]));
             } catch (Exception e) {
 //                logger.error(e.getMessage());
-//                logger.error("주소 데이터 반환 실패. 대상 : " + lottoResultStoreDTO.getTurn() + "회 " + lottoResultStoreDTO.getStoreAddress());
+//                logger.error("주소 데이터 반환 실패. 대상 : " + lottoResultStoreVO.getTurn() + "회 " + lottoResultStoreVO.getStoreAddress());
 //                logger.error("주소 : " + Arrays.toString(addressInformationArr));
                 return;
             }
@@ -775,29 +901,91 @@ public class LottoParser {
 //            httpURLConnection.setRequestProperty("User-Agent", "PostmanRuntime/7.26.10");
         } catch (Exception e) {
 //            logger.error(e.getMessage());
-//            logger.error("주소 데이터 반환 실패. 대상 : " + lottoResultStoreDTO.getTurn() + "회 " + lottoResultStoreDTO.getStoreAddress());
+//            logger.error("주소 데이터 반환 실패. 대상 : " + lottoResultStoreVO.getTurn() + "회 " + lottoResultStoreVO.getStoreAddress());
+        }
+    }
+    private void setLocation(LottoWinningStoreVO lottoWinningStoreVO) {
+        try {
+            URL url = new URL("http://www.dawuljuso.com/input_pro.php");
+            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setRequestMethod("POST"); // HTTP POST 메소드 설정
+            httpURLConnection.setDoOutput(true);
+
+            final String targetAddress = lottoWinningStoreVO.getAddress();
+            String encodedParamsString = "refine_ty=8&protocol_="+ UriEncoder.encode(targetAddress);
+            OutputStream os = httpURLConnection.getOutputStream();
+            byte[] input = encodedParamsString.getBytes(StandardCharsets.UTF_8);
+            os.write(input, 0, input.length);
+            os.close();
+
+            BufferedReader br = new BufferedReader(
+                    new InputStreamReader(httpURLConnection.getInputStream(), StandardCharsets.UTF_8));
+            StringBuilder response = new StringBuilder();
+            String responseLine = null;
+            while ((responseLine = br.readLine()) != null) {
+                response.append(responseLine.trim());
+            }
+            final String result = response.toString();
+            br.close();
+
+            final String[] resultSplit = result.split(";");
+            final String addressPart = resultSplit[0];
+            final String[] addressInformationArr = addressPart.split("\\|");
+            boolean isDataEmpty = addressInformationArr[1] == null || addressInformationArr[1].length() == 0;
+
+            if(isDataEmpty) {
+//                logger.error("주소 데이터 반환 실패. 대상 : " + lottoResultStoreVO.getTurn() + "회 " + lottoResultStoreVO.getStoreAddress());
+//                logger.error("주소 : " + Arrays.toString(addressInformationArr));
+                return;
+            }
+
+            try {
+                lottoWinningStoreVO.setLatitude(Double.parseDouble(addressInformationArr[4]));
+                lottoWinningStoreVO.setLongitude(Double.parseDouble(addressInformationArr[3]));
+            } catch (Exception e) {
+//                logger.error(e.getMessage());
+//                logger.error("주소 데이터 반환 실패. 대상 : " + lottoResultStoreVO.getTurn() + "회 " + lottoResultStoreVO.getStoreAddress());
+//                logger.error("주소 : " + Arrays.toString(addressInformationArr));
+                return;
+            }
+
+//            httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+//            httpURLConnection.setRequestProperty("Accept", "*/*");
+//            httpURLConnection.setRequestProperty("Accept-Encoding", "gzip, deflate");
+//            httpURLConnection.setRequestProperty("Accept-Language", "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7");
+//            httpURLConnection.setRequestProperty("User-Agent", "PostmanRuntime/7.26.10");
+        } catch (Exception e) {
+//            logger.error(e.getMessage());
+//            logger.error("주소 데이터 반환 실패. 대상 : " + lottoResultStoreVO.getTurn() + "회 " + lottoResultStoreVO.getStoreAddress());
         }
     }
 
     /**
      * <pre>
      * Description :
-     *     Element 객체로부터 맵 고유값과 연락처를 파싱하여 LottoResultDTO의 파라미터에 set
+     *     Element 객체로부터 맵 고유값과 연락처를 파싱하여 LottoResultVO의 파라미터에 set
      * ===============================================
      * Member fields :
      *     Element storeTd
-     *     LottoResultStoreDTO lottoResultStoreDTO
+     *     LottoResultStoreVO lottoResultStoreVO
      * ===============================================
      *
      * Author : HeonSeung Kim
      * Date   : 2021/03/12
      * </pre>
      */
-    private void setMapIdAndPhone(Element storeTd, LottoResultStoreDTO lottoResultStoreDTO) {
+    private void setMapIdAndPhone(Element storeTd, LottoResultStoreVO lottoResultStoreVO) {
         final String tdOnclick = storeTd.select(A).attr(ONCLICK);
         final String mapId = tdOnclick.substring(tdOnclick.indexOf("('") + 2, tdOnclick.indexOf("')"));
-        lottoResultStoreDTO.setStoreMapId(mapId);
+        lottoResultStoreVO.setStoreMapId(mapId);
         Document mapDocument = jsoupUtils.getDocumentFromURL(LottoConstant.LottoURL.STORE_MAP_PREFIX.getUrl() + mapId);
-        lottoResultStoreDTO.setStorePhone(mapDocument.select(LottoConstant.LottoSelector.STORE_PHONE.getSelector()).text());
+        lottoResultStoreVO.setStorePhone(mapDocument.select(LottoConstant.LottoSelector.STORE_PHONE.getSelector()).text());
+    }
+    private void setMapIdAndPhone(Element storeTd, LottoWinningStoreVO lottoWinningStoreVO) {
+        final String tdOnclick = storeTd.select(A).attr(ONCLICK);
+        final String mapId = tdOnclick.substring(tdOnclick.indexOf("('") + 2, tdOnclick.indexOf("')"));
+        lottoWinningStoreVO.setMapId(mapId);
+        Document mapDocument = jsoupUtils.getDocumentFromURL(LottoConstant.LottoURL.STORE_MAP_PREFIX.getUrl() + mapId);
+        lottoWinningStoreVO.setPhone(mapDocument.select(LottoConstant.LottoSelector.STORE_PHONE.getSelector()).text());
     }
 }

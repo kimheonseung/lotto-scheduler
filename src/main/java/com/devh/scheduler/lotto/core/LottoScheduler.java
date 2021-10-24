@@ -5,13 +5,13 @@ import com.devh.common.interfaces.IScheduler;
 import com.devh.common.util.ExceptionUtils;
 import com.devh.common.util.component.JsoupUtils;
 import com.devh.scheduler.lotto.constant.LottoConstant;
-import com.devh.scheduler.lotto.dto.LottoResultDTO;
-import com.devh.scheduler.lotto.dto.LottoResultDetailDTO;
-import com.devh.scheduler.lotto.dto.LottoResultStoreDTO;
 import com.devh.scheduler.lotto.service.LottoResultDetailService;
 import com.devh.scheduler.lotto.service.LottoResultService;
 import com.devh.scheduler.lotto.service.LottoResultStoreService;
-import com.devh.scheduler.lotto.util.JsonFileUtils;
+import com.devh.scheduler.lotto.service.LottoWinningStoreService;
+import com.devh.scheduler.lotto.vo.LottoResultDetailVO;
+import com.devh.scheduler.lotto.vo.LottoResultVO;
+import com.devh.scheduler.lotto.vo.LottoWinningStoreVO;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
@@ -31,7 +31,8 @@ public class LottoScheduler implements IScheduler {
     /* DI */
     private final LottoResultService lottoResultService;
     private final LottoResultDetailService lottoResultDetailService;
-    private final LottoResultStoreService lottoResultStoreService;
+//    private final LottoResultStoreService lottoResultStoreService;
+    private final LottoWinningStoreService lottoWinningStoreService;
     private final JsoupUtils jsoupUtils;
     private final LottoParser lottoParser;
 
@@ -98,26 +99,31 @@ public class LottoScheduler implements IScheduler {
                         logger.error("Schedule will stop. Cause : Failed to get target turn. - " + targetTurn);
                         break;
                     }
-                    LottoResultDTO lottoResultDTO = lottoParser.getLottoResultDTOFromDocument(targetDocument);
+                    LottoResultVO lottoResultVO = lottoParser.getLottoResultVOFromDocument(targetDocument);
 
-                    List<LottoResultDetailDTO> lottoResultDetailDTOList = lottoParser.getLottoResultDetailDTOListFromURL(targetDocument);
-                    if(lottoResultDetailDTOList == null || lottoResultDetailDTOList.size() == 0) {
-                        logger.error("Schedule will stop. Cause : Failed to parse LottoResultDetailDTO list. - " + targetUrl);
+                    List<LottoResultDetailVO> lottoResultDetailVOList = lottoParser.getLottoResultDetailVOListFromURL(targetDocument);
+                    if(lottoResultDetailVOList == null || lottoResultDetailVOList.size() == 0) {
+                        logger.error("Schedule will stop. Cause : Failed to parse LottoResultDetailVO list. - " + targetUrl);
                         break;
                     }
 
-                    lottoResultService.saveDTO(lottoResultDTO);
-                    lottoResultDetailService.saveDTOList(lottoResultDetailDTOList);
+                    lottoResultService.saveVO(lottoResultVO);
+                    lottoResultDetailService.saveVOList(lottoResultDetailVOList);
 
-                    List<LottoResultStoreDTO> lottoResultStoreList = lottoParser.getLottoResultStoreDTOListFromTurn(targetTurn);
-                    if(lottoResultStoreList != null && lottoResultStoreList.size() > 0) {
-                        boolean bulkResult = lottoResultStoreService.bulkLottoResultStoreDTOList(lottoResultStoreList);
-                        logger.info("bulkRequest : " + bulkResult);
-                        JsonFileUtils.getInstance().createLottoResultStoreListJsonFile(lottoResultStoreList);
+//                    List<LottoResultStoreVO> lottoResultStoreList = lottoParser.getLottoResultStoreVOListFromTurn(targetTurn);
+//                    if(lottoResultStoreList != null && lottoResultStoreList.size() > 0) {
+//                        boolean bulkResult = lottoResultStoreService.bulkLottoResultStoreVOList(lottoResultStoreList);
+//                        logger.info("bulkRequest : " + bulkResult);
+//                        JsonFileUtils.getInstance().createLottoResultStoreListJsonFile(lottoResultStoreList);
+//                    }
+                    List<LottoWinningStoreVO> lottoWinningStoreVOList = lottoParser.getLottoWinningStoreVOListFromTurn(targetTurn);
+                    if(lottoWinningStoreVOList != null && lottoWinningStoreVOList.size() > 0) {
+                        boolean result = lottoWinningStoreService.saveAll(lottoWinningStoreVOList);
+                        logger.info("store saved : " + result + " / " + lottoWinningStoreVOList.size());
                     }
 
-                    JsonFileUtils.getInstance().createLottoResultJsonFile(lottoResultDTO);
-                    JsonFileUtils.getInstance().createLottoResultDetailListJsonFile(lottoResultDetailDTOList);
+//                    JsonFileUtils.getInstance().createLottoResultJsonFile(lottoResultVO);
+//                    JsonFileUtils.getInstance().createLottoResultDetailListJsonFile(lottoResultDetailVOList);
                     logger.info(targetTurn + " : Success to save.");
 
                     try {Thread.sleep(500L);} catch (InterruptedException ignored) {}

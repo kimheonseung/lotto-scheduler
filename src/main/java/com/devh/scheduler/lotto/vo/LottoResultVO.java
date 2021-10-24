@@ -1,4 +1,4 @@
-package com.devh.scheduler.lotto.dto;
+package com.devh.scheduler.lotto.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,7 +34,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class LottoResultDTO {
+public class LottoResultVO {
     private final String DATE_SPLITTER = "-";
 
     private Integer turn;

@@ -1,4 +1,4 @@
-package com.devh.scheduler.lotto.dto;
+package com.devh.scheduler.lotto.vo;
 
 import com.devh.scheduler.lotto.constant.NewsResultStoreField;
 import lombok.AllArgsConstructor;
@@ -30,11 +30,12 @@ import java.util.Map;
  * Date   : 2021-03-09
  * </pre>
  */
+@Deprecated
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class LottoResultStoreDTO {
+public class LottoResultStoreVO {
     private String rowId;
     private Integer rank;
     @Builder.Default

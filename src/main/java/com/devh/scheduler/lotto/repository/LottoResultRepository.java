@@ -1,7 +1,6 @@
 package com.devh.scheduler.lotto.repository;
 
 import com.devh.scheduler.lotto.entity.LottoResult;
-import com.devh.scheduler.lotto.projection.LottoResultNumberArrayProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

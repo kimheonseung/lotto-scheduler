@@ -1,6 +1,6 @@
 package com.devh.scheduler.lotto.service;
 
-import com.devh.scheduler.lotto.dto.LottoResultStoreDTO;
+import com.devh.scheduler.lotto.vo.LottoResultStoreVO;
 
 import java.util.*;
 
@@ -17,8 +17,9 @@ import java.util.*;
  * Date   : 2021/03/12
  * </pre>
  */
+@Deprecated
 public interface LottoResultStoreService {
 
-    boolean bulkLottoResultStoreDTOList(List<LottoResultStoreDTO> lottoResultStoreDTOList);
+    boolean bulkLottoResultStoreVOList(List<LottoResultStoreVO> lottoResultStoreVOList);
 
 }
